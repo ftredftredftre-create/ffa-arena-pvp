@@ -114,6 +114,35 @@
   #promo-msg{min-height:20px;font-size:15px;margin-top:6px}
   .xh-preview{width:120px;height:120px;margin:10px auto;position:relative;background:linear-gradient(135deg,#222,#444);border-radius:10px;border:1px solid var(--line)}
 
+  /* ---------- ПРЕВЬЮ НОЖА В МЕНЮ ---------- */
+  #knifelab .panel{width:min(1200px,96vw);max-height:94vh;padding:18px 22px}
+  .lab-wrap{display:grid;grid-template-columns:1fr 360px;gap:16px;align-items:stretch;text-align:left}
+  #lab-view{position:relative;height:min(68vh,620px);border-radius:14px;overflow:hidden;cursor:grab;
+            background:radial-gradient(ellipse at 50% 40%,#2a3352 0%,#0b0d16 75%);border:1px solid var(--line)}
+  #lab-view:active{cursor:grabbing}
+  #lab-view canvas{display:block;width:100%;height:100%}
+  #lab-hint{position:absolute;left:12px;bottom:10px;font-size:13px;color:#8a90a8;pointer-events:none;letter-spacing:1px}
+  #lab-side{overflow:auto;max-height:min(68vh,620px);padding-right:6px}
+  #lab-side::-webkit-scrollbar{width:6px}#lab-side::-webkit-scrollbar-thumb{background:#333;border-radius:3px}
+  .lab-group{background:rgba(255,255,255,.03);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:10px}
+  .lab-group h4{margin:0 0 6px;font-family:'Orbitron',sans-serif;font-size:12px;letter-spacing:3px;color:var(--gold)}
+  .lab-row{display:grid;grid-template-columns:34px 1fr 62px;align-items:center;gap:8px;margin:6px 0;font-size:15px}
+  .lab-row input[type=range]{width:100%;-webkit-appearance:none;appearance:none;height:5px;border-radius:5px;
+        background:linear-gradient(90deg,var(--accent) var(--p,50%),#2a2f45 var(--p,50%));outline:none;cursor:pointer}
+  .lab-row input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;
+        background:#fff;border:3px solid var(--accent);cursor:pointer}
+  .lab-row input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--accent)}
+  .lab-row .lk{font-family:'Orbitron',sans-serif;font-size:13px;color:#fff;text-align:center}
+  .lab-row .lv{font-family:'Orbitron',sans-serif;font-size:12px;color:var(--gold);text-align:right}
+  .lab-row input[type=number]{width:100%;box-sizing:border-box;padding:4px 6px;background:rgba(0,0,0,.4);color:#fff;
+        border:1px solid var(--line);border-radius:6px;font-family:'Orbitron';font-size:12px;text-align:right}
+  .lab-btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:10px}
+  .lab-btns .btn{min-width:0;margin:0;padding:10px 14px;font-size:12px;letter-spacing:1px}
+  #lab-out{width:100%;height:110px;margin-top:8px;background:rgba(0,0,0,.45);color:#cfe;border:1px solid var(--line);
+           border-radius:8px;font-family:Consolas,monospace;font-size:12px;padding:8px;box-sizing:border-box;resize:none}
+  .lab-check{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:15px}
+  @media (max-width:900px){ .lab-wrap{grid-template-columns:1fr} #lab-view{height:50vh} }
+
   #crosshair{position:fixed;left:50%;top:50%;width:0;height:0;pointer-events:none;z-index:4}
   #hit-marker{position:fixed;left:50%;top:50%;width:30px;height:30px;margin:-15px;pointer-events:none;opacity:0}
   #hud{position:fixed;inset:0;pointer-events:none;display:none;font-family:'Rajdhani',sans-serif}
@@ -255,6 +284,47 @@
   </div>
 </div>
 
+<!-- ===== НОВОЕ: ПРЕВЬЮ / НАСТРОЙКА МОДЕЛИ КЕРАМБИТА ===== -->
+<div id="knifelab" class="screen">
+  <div class="panel">
+    <h2>3D НАСТРОЙКА НОЖА</h2>
+    <div class="lab-wrap">
+      <div id="lab-view">
+        <div id="lab-hint">ЛКМ + тянуть — вращение · колесо — масштаб</div>
+      </div>
+      <div id="lab-side">
+        <div class="lab-group">
+          <h4>РАЗМЕР (SCALE)</h4>
+          <div class="lab-row">
+            <span class="lk">S</span>
+            <input type="range" id="k-scale" min="0.0001" max="0.02" step="0.0001">
+            <input type="number" id="k-scale-n" step="0.0001">
+          </div>
+        </div>
+        <div class="lab-group">
+          <h4>ПОЗИЦИЯ</h4>
+          <div class="lab-row"><span class="lk">X</span><input type="range" id="k-px" min="-5" max="5" step="0.01"><input type="number" id="k-px-n" step="0.01"></div>
+          <div class="lab-row"><span class="lk">Y</span><input type="range" id="k-py" min="-5" max="5" step="0.01"><input type="number" id="k-py-n" step="0.01"></div>
+          <div class="lab-row"><span class="lk">Z</span><input type="range" id="k-pz" min="-5" max="5" step="0.01"><input type="number" id="k-pz-n" step="0.01"></div>
+        </div>
+        <div class="lab-group">
+          <h4>ПОВОРОТ (ГРАДУСЫ)</h4>
+          <div class="lab-row"><span class="lk">X</span><input type="range" id="k-rx" min="-180" max="180" step="1"><input type="number" id="k-rx-n" step="1"></div>
+          <div class="lab-row"><span class="lk">Y</span><input type="range" id="k-ry" min="-180" max="180" step="1"><input type="number" id="k-ry-n" step="1"></div>
+          <div class="lab-row"><span class="lk">Z</span><input type="range" id="k-rz" min="-180" max="180" step="1"><input type="number" id="k-rz-n" step="1"></div>
+          <label class="lab-check"><input type="checkbox" id="k-autospin"> Авто-вращение</label>
+        </div>
+        <div class="lab-btns">
+          <div class="btn ghost" id="k-reset">↺ СБРОС</div>
+          <div class="btn ghost" id="k-copy">📋 КОПИРОВАТЬ</div>
+        </div>
+        <textarea id="lab-out" readonly placeholder="Нажми «КОПИРОВАТЬ» — здесь появятся готовые константы для кода"></textarea>
+      </div>
+    </div>
+    <div class="btn ghost" id="btn-lab-back" style="margin-top:14px">← НАЗАД</div>
+  </div>
+</div>
+
 <div id="summary" class="screen">
   <div class="panel">
     <h2>ИГРА ОКОНЧЕНА</h2>
@@ -294,13 +364,26 @@ const $=id=>document.getElementById(id);
 
 // ==================================================================
 //                    МОДЕЛЬ КЕРАМБИТА (ТВОЯ)
+//   Значения по умолчанию. Реальные берутся из настроек (меню → 3D НАСТРОЙКА)
 // ==================================================================
-const KARAMBIT_URL   = 'models/karambit.glb'; // путь к твоей модели
-const KARAMBIT_SCALE = 0.001;                  // размер (меняй, если огромная/крошечная)
-const KARAMBIT_POS   = {x:0, y:-3, z:0};       // сдвиг
-const KARAMBIT_ROT   = {x:0, y:Math.PI, z:0}; // поворот в радианах
+const KARAMBIT_URL = 'models/karambit.glb';
 const gltfLoader = new GLTFLoader();
 const karambitCache = {};
+const KNIFE_TRANSFORM_KEY = 'ffa_knife_transform_v1';
+const KNIFE_DEFAULT = {
+  scale: 0.001,
+  px: 0, py: -3, pz: 0,            // позиция
+  rx: 0, ry: 180, rz: 0            // поворот в ГРАДУСАХ
+};
+let knifeT = {...KNIFE_DEFAULT};
+try{ const s=JSON.parse(localStorage.getItem(KNIFE_TRANSFORM_KEY)); if(s) knifeT={...knifeT,...s}; }catch(e){}
+function saveKnifeT(){ try{ localStorage.setItem(KNIFE_TRANSFORM_KEY,JSON.stringify(knifeT)); }catch(e){} }
+const D2R = Math.PI/180;
+function applyKnifeTransform(obj){
+  obj.scale.setScalar(knifeT.scale);
+  obj.position.set(knifeT.px,knifeT.py,knifeT.pz);
+  obj.rotation.set(knifeT.rx*D2R,knifeT.ry*D2R,knifeT.rz*D2R);
+}
 
 // ==================================================================
 //                    СОХРАНЕНИЕ
@@ -896,9 +979,7 @@ function buildKnife(type='karambit', skin='default'){
     pivot.add(holder);
     loadKarambitModel(sk).then(model=>{
       if(model){
-        model.scale.setScalar(KARAMBIT_SCALE);
-        model.rotation.set(KARAMBIT_ROT.x,KARAMBIT_ROT.y,KARAMBIT_ROT.z);
-        model.position.set(KARAMBIT_POS.x,KARAMBIT_POS.y,KARAMBIT_POS.z);
+        applyKnifeTransform(model);
         holder.add(model);
         anim.blade=model;
       } else {
@@ -1452,7 +1533,7 @@ function animateWeapon(dt){
     const p=knifeDrawPose(m.type, 1-drawT);
     m.pivot.rotation.set(0, p.rotY||0, p.rotZ||0);
     m.pivot.position.set(0,p.offY||0,p.offZ||0);
-    if(m.blade) m.blade.scale.setScalar(Math.max(.05,p.bladeOpen));
+    if(m.blade) m.blade.scale.setScalar(Math.max(.05,p.bladeOpen)*(m.blade.userData.baseScale??1));
   } else {
     m.group.rotation.set(0,0,0);
   }
@@ -1519,9 +1600,172 @@ function refreshCrosshairPreview(){
 }
 
 // ==================================================================
+//                    3D-ЛАБОРАТОРИЯ НОЖА (в меню)
+// ==================================================================
+const labView=$('lab-view');
+const labRenderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
+labRenderer.setPixelRatio(Math.min(devicePixelRatio,2));
+labRenderer.outputColorSpace=THREE.SRGBColorSpace;
+labRenderer.toneMapping=THREE.ACESFilmicToneMapping;
+labRenderer.toneMappingExposure=1.1;
+labView.insertBefore(labRenderer.domElement,labView.firstChild);
+
+const labScene=new THREE.Scene();
+const labCam=new THREE.PerspectiveCamera(40,1,.01,100);
+labCam.position.set(0,0,0.6);
+labScene.add(new THREE.HemisphereLight(0xffffff,0x334455,1.1));
+const labKey=new THREE.DirectionalLight(0xffffff,1.6); labKey.position.set(2,3,4); labScene.add(labKey);
+const labFill=new THREE.DirectionalLight(0x88aaff,.6); labFill.position.set(-3,-1,-2); labScene.add(labFill);
+const labEnv=new THREE.PMREMGenerator(labRenderer).fromScene(new RoomEnvironment(),.04).texture;
+labScene.environment=labEnv;
+
+// Пивот: вращается мышкой, внутри — модель (её transform задаётся knifeT)
+const labPivot=new THREE.Group(); labScene.add(labPivot);
+const labHolder=new THREE.Group(); labPivot.add(labHolder);
+let labModel=null;
+let labUserSpin=0, labSpinVel=0, labDragging=false, labLastX=0, labLastY=0;
+let labAutoSpin=false;
+
+function labLoadModel(){
+  const sk=KNIFE_SKINS.default;
+  loadKarambitModel(sk).then(model=>{
+    if(!model){
+      const fb=buildProceduralKarambit(sk); labModel=fb.group;
+      // запасная модель масштабируется отдельно — не трогаем knifeT
+      labModel.scale.setScalar(20);
+    } else {
+      labModel=model;
+      applyKnifeTransform(labModel);
+    }
+    labHolder.add(labModel);
+    labRefreshUI();
+  });
+}
+
+function labResize(){
+  const w=labView.clientWidth, h=labView.clientHeight;
+  if(!w||!h) return;
+  labRenderer.setSize(w,h,false);
+  labCam.aspect=w/h; labCam.updateProjectionMatrix();
+  labRenderer.domElement.style.width=w+'px';
+  labRenderer.domElement.style.height=h+'px';
+}
+
+function labApplyToModel(){
+  if(labModel) applyKnifeTransform(labModel);
+}
+
+// Вращение мышкой
+labView.addEventListener('pointerdown',e=>{
+  labDragging=true; labLastX=e.clientX; labLastY=e.clientY; labSpinVel=0;
+  labView.setPointerCapture(e.pointerId);
+});
+labView.addEventListener('pointermove',e=>{
+  if(!labDragging) return;
+  const dx=e.clientX-labLastX, dy=e.clientY-labLastY;
+  labLastX=e.clientX; labLastY=e.clientY;
+  knifeT.ry+=dx*.6;
+  knifeT.rx+=dy*.6;
+  knifeT.rx=Math.max(-180,Math.min(180,knifeT.rx));
+  knifeT.ry=((knifeT.ry+180)%360+360)%360-180;
+  labSpinVel=dx*.6;
+  labApplyToModel(); labRefreshUI(false); saveKnifeT();
+});
+labView.addEventListener('pointerup',()=>{ labDragging=false; });
+labView.addEventListener('pointercancel',()=>{ labDragging=false; });
+// Колесо = масштаб
+labView.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const k=e.deltaY<0?1.08:1/1.08;
+  knifeT.scale=Math.max(.0001,Math.min(.02,knifeT.scale*k));
+  labApplyToModel(); labRefreshUI(false); saveKnifeT();
+},{passive:false});
+
+// Привязка слайдеров/чисел к knifeT
+const LAB_BIND=[
+  {s:'k-scale', n:'k-scale-n', key:'scale', min:.0001, max:.02,  step:.0001, dec:4},
+  {s:'k-px', n:'k-px-n', key:'px', min:-5, max:5, step:.01, dec:2},
+  {s:'k-py', n:'k-py-n', key:'py', min:-5, max:5, step:.01, dec:2},
+  {s:'k-pz', n:'k-pz-n', key:'pz', min:-5, max:5, step:.01, dec:2},
+  {s:'k-rx', n:'k-rx-n', key:'rx', min:-180, max:180, step:1, dec:0},
+  {s:'k-ry', n:'k-ry-n', key:'ry', min:-180, max:180, step:1, dec:0},
+  {s:'k-rz', n:'k-rz-n', key:'rz', min:-180, max:180, step:1, dec:0},
+];
+function paintLab(el){ el.style.setProperty('--p',((el.value-el.min)/(el.max-el.min)*100)+'%'); }
+function labRefreshUI(full=true){
+  for(const b of LAB_BIND){
+    const s=$(b.s), n=$(b.n);
+    s.min=b.min; s.max=b.max; s.step=b.step;
+    const v=+knifeT[b.key];
+    s.value=v;
+    if(document.activeElement!==n) n.value=v.toFixed(b.dec);
+    paintLab(s);
+  }
+}
+for(const b of LAB_BIND){
+  const s=$(b.s), n=$(b.n);
+  s.addEventListener('input',()=>{
+    knifeT[b.key]=parseFloat(s.value);
+    labApplyToModel(); labRefreshUI(false); saveKnifeT();
+  });
+  n.addEventListener('change',()=>{
+    const v=parseFloat(n.value);
+    if(!isNaN(v)){
+      knifeT[b.key]=Math.max(b.min,Math.min(b.max,v));
+      labApplyToModel(); labRefreshUI(); saveKnifeT();
+    }
+  });
+}
+$('k-autospin').addEventListener('change',e=>{ labAutoSpin=e.target.checked; });
+$('k-reset').onclick=()=>{
+  knifeT={...KNIFE_DEFAULT};
+  saveKnifeT(); labApplyToModel(); labRefreshUI();
+};
+$('k-copy').onclick=()=>{
+  const txt=
+`const KARAMBIT_SCALE = ${knifeT.scale};
+const KARAMBIT_POS   = {x:${knifeT.px.toFixed(3)}, y:${knifeT.py.toFixed(3)}, z:${knifeT.pz.toFixed(3)}};
+const KARAMBIT_ROT   = {x:${(knifeT.rx*D2R).toFixed(4)}, y:${(knifeT.ry*D2R).toFixed(4)}, z:${(knifeT.rz*D2R).toFixed(4)}}; // радианы`;
+  $('lab-out').value=txt;
+  try{ navigator.clipboard.writeText(txt); }catch(e){}
+  console.log(txt);
+};
+
+function labLoop(){
+  if(!$('knifelab').classList.contains('on')){ requestAnimationFrame(labLoop); return; }
+  if(!labDragging){
+    if(Math.abs(labSpinVel)>.01){
+      knifeT.ry+=labSpinVel; labSpinVel*=.92;
+      knifeT.ry=((knifeT.ry+180)%360+360)%360-180;
+      labApplyToModel(); labRefreshUI(false);
+    }
+    if(labAutoSpin){
+      knifeT.ry=((knifeT.ry+0.6+180)%360+360)%360-180;
+      labApplyToModel(); labRefreshUI(false);
+    }
+  }
+  labRenderer.render(labScene,labCam);
+  requestAnimationFrame(labLoop);
+}
+
+// Инициализация лаборатории
+labResize();
+labLoadModel();
+labRefreshUI();
+labLoop();
+addEventListener('resize',labResize);
+
+function openKnifeLab(){
+  labResize();
+  labRefreshUI();
+  showScreen('knifelab');
+}
+$('btn-lab-back').onclick=()=>showScreen('settings');
+
+// ==================================================================
 //                    МЕНЮ / ЛОДАУТ / МАГАЗИН / ИНВЕНТАРЬ / НАСТРОЙКИ
 // ==================================================================
-function showScreen(id){ ['menu','loadout','shop','inv','summary','settings'].forEach(s=>$(s).classList.toggle('on',s===id)); }
+function showScreen(id){ ['menu','loadout','shop','inv','summary','settings','knifelab'].forEach(s=>$(s).classList.toggle('on',s===id)); }
 function refreshCoins(){ $('menu-coins').textContent=save.coins; $('shop-coins').textContent=save.coins; }
 
 function renderLoadout(){
@@ -1619,6 +1863,18 @@ $('x-color').addEventListener('input',e=>{
   writeSettings(); applySettings(); refreshCrosshairPreview();
 });
 $('btn-settings-reset').onclick=()=>{ settings=DEFAULT_SETTINGS(); writeSettings(); refreshSettingsUI(); applySettings(); };
+
+// Кнопка открытия 3D-настройки ножа (вставляется в экран настроек)
+(function addKnifeLabButton(){
+  const panel=$('settings').querySelector('.panel');
+  const btn=document.createElement('div');
+  btn.className='btn primary';
+  btn.id='btn-open-lab';
+  btn.textContent='🔪 3D НАСТРОЙКА НОЖА (XYZ / ПОВОРОТ)';
+  btn.style.marginTop='14px';
+  btn.onclick=openKnifeLab;
+  panel.insertBefore(btn,$('btn-settings-reset'));
+})();
 
 // --- Промокоды ---
 function applyPromo(raw){
